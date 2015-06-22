@@ -1,0 +1,14 @@
+.header{
+ height: 30px;
+ background-color:#DC143C;
+ color:white;
+ text-align:center;
+}
+
+.main{
+  text-align: center;
+}
+
+.contents{
+  text-align: center;
+}
