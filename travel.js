@@ -31,20 +31,23 @@ function OnButtonClick() {
 var APIKEY = "ffb6062385e7eb4f";
  var endpoint = "http://webservice.recruit.co.jp/ab-road-air/ticket/v1/";
 
-function createCondition(deperture, destination,month){
+function createCondition(deperture, destination, month, cheep){
   return {
     key: APIKEY,
     city: destination,
     dept_detail: deperture,
     ym:month,
+    order:cheep,
     format: "jsonp"
   };
 }
 
 function dataLoaded(data){
   console.log(data);
-  document.write(data.results.ticket[0].price.min + "円");
-  document.write(data.results.ticket[0].airline_summary);
+  alert(data.results.ticket[0].price.min + "円");
+  alert(data.results.ticket[1].price.min + "円");
+  alert(data.results.ticket[2].price.min + "円");
+  alert(data.results.ticket[3].price.min + "円");
 }
 
 function search(){
@@ -53,7 +56,7 @@ function search(){
 
   jQuery.ajax({
     url: endpoint,
-    data: createCondition("HND", "IST", a),
+    data: createCondition("HND", "IST", a, "1"),
     dataType: "jsonp",
     success:dataLoaded
   });
