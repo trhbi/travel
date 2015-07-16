@@ -1,4 +1,4 @@
-var number = [50000, 30000, 40000, 10000, 20000]//配列
+var number = [50000, 30000, 40000, 10000, 20000];//配列
 
 number.sort(
   function (a,b){
@@ -7,26 +7,6 @@ number.sort(
     return 0;
   }
 );//配列をソート
-
-console.log()
-
-function aaa(index){
-  var price = number[index];
-  var div = document.createElement("div");
-  div.textContent = price + "円";
-  div.classList.add("box" + index);
-  return div;
-}
-
-function OnButtonClick() {
-    var i = 0;
-    var container = document.querySelector(".contents");
-    while(i < number.length){
-      var elm = aaa(i);
-      container.appendChild(elm);
-      i = i + 1;
-    }
-}
 
 var APIKEY = "ffb6062385e7eb4f";
  var endpoint = "http://webservice.recruit.co.jp/ab-road-air/ticket/v1/";
@@ -42,12 +22,27 @@ function createCondition(deperture, destination, month, cheep){
   };
 }
 
+function renderTicket(ticket, index){
+  var elm = document.createElement("div");
+  elm.textContent = ticket.price.min + "円";
+  elm.classList.add("box" + index);
+  return elm;
+}
+
+function compareTicket(a, b){
+  return a.price.min -  b.price.min;
+}
+
 function dataLoaded(data){
   console.log(data);
-  alert(data.results.ticket[0].price.min + "円");
-  alert(data.results.ticket[1].price.min + "円");
-  alert(data.results.ticket[2].price.min + "円");
-  alert(data.results.ticket[3].price.min + "円");
+  var outer = document.querySelector("#output");
+  var tickets = data.results.ticket;
+  tickets.sort(compareTicket); // チケットを並び替え
+  var i = 0;
+  while(i < tickets.length){
+    outer.appendChild(renderTicket(tickets[i], i));
+    i = i + 1;
+  }
 }
 
 function search(){
